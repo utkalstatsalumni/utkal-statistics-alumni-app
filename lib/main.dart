@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'screens/splash_screen.dart';
+import 'utils/app_theme.dart';
 
 void main() {
   runApp(const AlumniApp());
@@ -13,7 +14,7 @@ class AlumniApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Utkal Statistics Alumni Association',
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: AppTheme.lightTheme,
       home: const SplashScreen(),
     );
   }
