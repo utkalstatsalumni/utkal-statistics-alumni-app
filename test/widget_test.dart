@@ -1,30 +1,49 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:utkal_statistics_alumni_app/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('shows splash screen on launch', (WidgetTester tester) async {
+    await tester.pumpWidget(const AlumniApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    expect(find.text('Utkal Statistics Alumni Association'), findsOneWidget);
+  });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+  testWidgets('navigates from splash to login', (WidgetTester tester) async {
+    await tester.pumpWidget(const AlumniApp());
+    await tester.pump(const Duration(seconds: 3));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Mobile Number'), findsOneWidget);
+    expect(find.text('Login'), findsWidgets);
+  });
+
+  testWidgets('shows validation errors for empty login', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(const AlumniApp());
+    await tester.pump(const Duration(seconds: 3));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.widgetWithText(ElevatedButton, 'Login'));
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('Enter your mobile number'), findsOneWidget);
+    expect(find.text('Enter your password'), findsOneWidget);
+  });
+
+  testWidgets('opens admin dashboard from demo button', (
+    WidgetTester tester,
+  ) async {
+    await tester.pumpWidget(const AlumniApp());
+    await tester.pump(const Duration(seconds: 3));
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Open Admin Demo'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Admin Dashboard'), findsOneWidget);
+    expect(find.text('Sample Pending Alumni'), findsOneWidget);
   });
 }
