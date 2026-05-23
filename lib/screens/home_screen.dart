@@ -51,30 +51,86 @@ class HomeScreen extends StatelessWidget {
     ];
 
     return Scaffold(
-      appBar: AppBar(title: const Text('USAA Home')),
+      appBar: AppBar(
+        title: const Text(
+          'USAA Home',
+          style: TextStyle(fontWeight: FontWeight.bold, letterSpacing: 1),
+        ),
+      ),
       body: ListView(
         padding: const EdgeInsets.all(16),
         children: [
-          Card(
+          Container(
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Color(0xFF1565C0), Color(0xFF6A1B9A)],
+
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+
+              borderRadius: BorderRadius.circular(20),
+
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black12,
+                  blurRadius: 10,
+                  offset: Offset(0, 5),
+                ),
+              ],
+            ),
             child: Padding(
-              padding: const EdgeInsets.all(16),
+              padding: const EdgeInsets.all(20),
+
               child: Row(
                 children: [
-                  Image.asset('assets/images/logo.png', height: 72, width: 72),
-                  const SizedBox(width: 16),
+                  Container(
+                    padding: const EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+
+                    child: Image.asset(
+                      'assets/images/logo.png',
+                      height: 70,
+                      width: 70,
+                    ),
+                  ),
+
+                  const SizedBox(width: 18),
+
                   Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
+
                       children: [
                         Text(
                           'Welcome, ${user.name}',
-                          style: Theme.of(context).textTheme.titleLarge,
+
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                        const SizedBox(height: 4),
+
+                        const SizedBox(height: 6),
+
                         Text(
-                          '${user.passingYear} batch • ${user.specialization}',
+                          '${user.passingYear} Batch',
+
+                          style: const TextStyle(
+                            color: Colors.white70,
+                            fontSize: 16,
+                          ),
                         ),
-                        Text(user.currentJob),
+
+                        Text(
+                          user.specialization,
+
+                          style: const TextStyle(color: Colors.white70),
+                        ),
                       ],
                     ),
                   ),
@@ -116,7 +172,7 @@ class _FeatureTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: InkWell(
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(18),
         onTap: () {
           Navigator.push(
             context,
@@ -128,10 +184,22 @@ class _FeatureTile extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
-                icon,
-                size: 36,
-                color: Theme.of(context).colorScheme.primary,
+              Container(
+                padding: const EdgeInsets.all(14),
+
+                decoration: BoxDecoration(
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.primary.withOpacity(0.12),
+
+                  borderRadius: BorderRadius.circular(14),
+                ),
+
+                child: Icon(
+                  icon,
+                  size: 34,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
               ),
               const SizedBox(height: 12),
               Text(
