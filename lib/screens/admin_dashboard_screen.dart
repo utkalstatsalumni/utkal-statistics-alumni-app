@@ -164,7 +164,7 @@ class _JournalReviewTab extends StatelessWidget {
                           child: ElevatedButton.icon(
                             onPressed: () {
                               AlumniRepository.updateJournalStatus(
-                                entry.title,
+                                index,
                                 JournalStatus.published,
                               );
                             },
@@ -177,7 +177,7 @@ class _JournalReviewTab extends StatelessWidget {
                           child: OutlinedButton.icon(
                             onPressed: () {
                               AlumniRepository.updateJournalStatus(
-                                entry.title,
+                                index,
                                 JournalStatus.rejected,
                               );
                             },

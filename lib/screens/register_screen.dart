@@ -85,7 +85,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     final user = AlumniUser(
       name: nameController.text.trim(),
       dateOfBirth: selectedDateOfBirth!,
-      passingYear: int.parse(passingYearController.text.trim()),
+      passingYear: passingYearController.text.trim(),
       currentJob: currentJobController.text.trim(),
       specialization: specializationController.text.trim(),
       hobbies: selectedHobbies.toList()..sort(),

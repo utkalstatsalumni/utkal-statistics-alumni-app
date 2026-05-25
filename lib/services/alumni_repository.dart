@@ -4,85 +4,83 @@ import '../models/alumni_user.dart';
 import '../models/journal_entry.dart';
 
 class AlumniRepository {
-  AlumniRepository._();
 
   static final ValueNotifier<List<AlumniUser>> users =
       ValueNotifier<List<AlumniUser>>([
-        AlumniUser(
-          name: 'Sample Pending Alumni',
-          dateOfBirth: DateTime(1992, 6, 15),
-          passingYear: 2015,
-          currentJob: 'Data Analyst, Bhubaneswar',
-          specialization: 'Applied Statistics',
-          hobbies: const ['Mentoring', 'Research', 'Events'],
-          photoReference: '',
-          address: 'Bhubaneswar, Odisha',
-          mobileNumber: '9999999999',
-          email: 'sample.alumni@example.com',
-          status: ApprovalStatus.pending,
-          createdAt: DateTime.now(),
-        ),
-      ]);
-
-  static final ValueNotifier<List<JournalEntry>>
-  journals = ValueNotifier<List<JournalEntry>>([
-    JournalEntry(
-      title: 'Remembering the Department Seminar Series',
-      author: 'Editorial Team',
-      summary:
-          'A short note celebrating academic talks and student participation.',
-      fileReference: 'sample-journal.pdf',
-      status: JournalStatus.published,
-      submittedAt: DateTime.now(),
+    AlumniUser(
+      name: 'Admin User',
+      mobileNumber: '9999999999',
+      email: 'admin@usaa.com',
+      passingYear: '2015',
+      specialization: 'Applied Statistics',
+      dateOfBirth: DateTime(1992, 6, 15),
+      currentJob: 'Senior Data Analyst',
+      hobbies: ['Reading', 'Travel', 'Research'],
+      photoReference: '',
+      address: 'Bhubaneswar, Odisha',
+      createdAt: DateTime.now(),
+      status: ApprovalStatus.approved,
     ),
   ]);
 
-  static AlumniUser? findApprovedUser(String mobileNumber) {
-    for (final user in users.value) {
-      if (user.mobileNumber == mobileNumber &&
-          user.status == ApprovalStatus.approved) {
-        return user;
-      }
-    }
+  static final ValueNotifier<List<JournalEntry>> journals =
+      ValueNotifier<List<JournalEntry>>([]);
 
-    return null;
+  static void registerUser(AlumniUser user) {
+
+    users.value = [...users.value, user];
   }
 
   static AlumniUser? findUser(String mobileNumber) {
-    for (final user in users.value) {
-      if (user.mobileNumber == mobileNumber) {
-        return user;
-      }
+
+    try {
+
+      return users.value.firstWhere(
+        (user) => user.mobileNumber == mobileNumber,
+      );
+
+    } catch (e) {
+
+      return null;
     }
-
-    return null;
   }
 
-  static void registerUser(AlumniUser user) {
-    users.value = [
-      ...users.value.where((item) => item.mobileNumber != user.mobileNumber),
-      user,
-    ];
-  }
+  static void updateUserStatus(
+    String mobileNumber,
+    ApprovalStatus status,
+  ) {
 
-  static void updateUserStatus(String mobileNumber, ApprovalStatus status) {
-    users.value = [
-      for (final user in users.value)
-        if (user.mobileNumber == mobileNumber)
-          user.copyWith(status: status)
-        else
-          user,
-    ];
+    final updatedUsers = users.value.map((user) {
+
+      if (user.mobileNumber == mobileNumber) {
+
+        return user.copyWith(status: status);
+      }
+
+      return user;
+
+    }).toList();
+
+    users.value = updatedUsers;
   }
 
   static void submitJournal(JournalEntry entry) {
-    journals.value = [entry, ...journals.value];
+
+    journals.value = [...journals.value, entry];
   }
 
-  static void updateJournalStatus(String title, JournalStatus status) {
-    journals.value = [
-      for (final entry in journals.value)
-        if (entry.title == title) entry.copyWith(status: status) else entry,
-    ];
+  static void updateJournalStatus(
+    int index,
+    JournalStatus status,
+  ) {
+
+    final updatedJournals = [...journals.value];
+
+    updatedJournals[index] =
+        updatedJournals[index].copyWith(
+      status: status,
+    );
+
+    journals.value = updatedJournals;
   }
 }
