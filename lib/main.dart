@@ -4,11 +4,12 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'models/alumni_user.dart';
 import 'screens/splash_screen.dart';
 import 'utils/app_theme.dart';
+import 'services/hive_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Hive.initFlutter();
+  await HiveService.init();
 
   if (!Hive.isAdapterRegistered(0)) {
     Hive.registerAdapter(AlumniUserAdapter());
